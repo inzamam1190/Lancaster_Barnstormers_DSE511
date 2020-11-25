@@ -120,14 +120,14 @@ def get_data(path, balance=True):
     X_origin = features.drop('target', 1)
     y_origin = features['target']
     
-    print(f'Shape of orgininal data: {X.shape}')
-    print(f'Class distribution: {Counter(y)}\n')
+    print(f'Shape of orgininal data: {X_origin.shape}')
+    print(f'Class distribution: {Counter(y_origin)}\n')
     
     if balance:
         oversample = SMOTE(random_state=42)
-        X_over, y_over = oversample.fit_resample(X=X, y=y)
-        print(f'Shape of oversampled data: {X.shape}')
-        print(f'Class distribution: {Counter(y)}')
+        X_over, y_over = oversample.fit_resample(X=X_origin, y=y_origin)
+        print(f'Shape of oversampled data: {X_over.shape}')
+        print(f'Class distribution: {Counter(y_over)}')
     else:
         pass
     
