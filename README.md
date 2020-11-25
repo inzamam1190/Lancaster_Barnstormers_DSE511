@@ -19,7 +19,11 @@ Deeper dive into the data from the individual projects by performing some statis
 ## Instructions of code
 - Reading data by using
 
-> import prepare_data
-> X_origin, y_origin, X_over, y_over = prepare_data.get_data('path/to/your/database/')
+'''python
+
+import prepare_data
+X_origin, y_origin, X_over, y_over = prepare_data.get_data('path/to/your/database/')
+
+'''
 
 - X contains features and y is the target variable (1: good loan, 0: bad loan)
