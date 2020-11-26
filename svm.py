@@ -20,8 +20,8 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
 
 def run_classifier():
-#Getting original and oversampled data
-
+	
+	#Getting original and oversampled data
 	X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
 
 	#Normalize the dataset
