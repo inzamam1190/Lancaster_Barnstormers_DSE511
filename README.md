@@ -27,3 +27,12 @@ X_origin, y_origin, X_over, y_over = prepare_data.get_data('path/to/your/databas
 ```
 
 - X contains features and y is the target variable (1: good loan, 0: bad loan)
+
+- Running SVM classifier
+
+```python
+
+import svm
+_ = svm.run_classifier()
+
+```
