@@ -19,11 +19,24 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
 
-def run_classifier():
-	
-	#Getting original and oversampled data
-	X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+#Getting original and oversampled data
+X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
 
+def run_classifier(X_origin, y_origin, X_over, y_over):
+    
+	""" Run SVM classifier on the original and oversampled datasets
+
+    Args:
+        X_origin: original features, a pandas DataFrame                    
+        y_origin: original target, a pandas Series
+        X_over: oversampled features, a pandas DataFrame 
+        y_over: oversampled target, a pandas Series
+		
+    Returns:
+        y_pred : prediction on the original test dataset, ndarray
+		y_pred1 : prediction on the oversampled test dataset, ndarray
+    """
+	
 	#Normalize the dataset
 	X_origin = StandardScaler().fit_transform(X_origin)
 	X_over = StandardScaler().fit_transform(X_over)
@@ -70,10 +83,10 @@ def run_classifier():
 	print('\nConfusion matrix of the SVM classifier for the oversampled dataset:\n')
 	print(confusion_matrix(y_test1,y_pred1))
 
-	return None
+	return y_pred, y_pred1
 
 if __name__ == "__main__":
-	_ = run_classifier()
+	y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over)
 
 
 
