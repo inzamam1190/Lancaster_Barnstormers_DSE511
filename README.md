@@ -33,6 +33,6 @@ X_origin, y_origin, X_over, y_over = prepare_data.get_data('path/to/your/databas
 ```python
 
 import svm
-_ = svm.run_classifier()
+y_pred_org, y_pred_over = svm.run_classifier(X_origin, y_origin, X_over, y_over)
 
 ```
