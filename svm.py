@@ -8,16 +8,68 @@ Date: 11/25/2020
 """
 #Importing necessary packages
 
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 import prepare_data
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import svm
+from sklearn.svm import SVC
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
 
 #Getting original and oversampled data
 X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+
+def plot_decision_boundary(X,y,title:str):
+	
+	""" Plot decision boundary after dimensionality reduction using PCA
+
+    Args:
+        X: Features, a pandas DataFrame                   
+        y: Target, a pandas Series
+        title: 'Original'/'oversampled', a string
+		
+    Returns:
+        decision boundary of PCA-reduced dataset 
+    """
+	pca = PCA(n_components=2)
+	Xreduced = pca.fit_transform(X)
+
+	def make_meshgrid(x, y, h=.02):
+		x_min, x_max = x.min() - 1, x.max() + 1
+		y_min, y_max = y.min() - 1, y.max() + 1
+		xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+		return xx, yy
+
+	def plot_contours(ax, clf, xx, yy, **params):
+		Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+		Z = Z.reshape(xx.shape)
+		out = ax.contourf(xx, yy, Z, **params)
+		return out
+
+	model = SVC(kernel='rbf', gamma='auto', C=3.0) #RBF kernel
+	clf = model.fit(Xreduced, y)
+
+	fig, ax = plt.subplots()
+
+	# Set-up grid for plotting.
+	X0, X1 = Xreduced[:, 0], Xreduced[:, 1]
+	xx, yy = make_meshgrid(X0, X1)
+
+	plot_contours(ax, clf, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
+	ax.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+	ax.set_ylabel('PC2')
+	ax.set_xlabel('PC1')
+	ax.set_xticks(())
+	ax.set_yticks(())
+	ax.set_title(f'Decison surface of {title} dataset using PCA')
+	ax.legend()
+	plt.show() 
+	
+	return None
 
 def run_classifier(X_origin, y_origin, X_over, y_over):
     
@@ -79,6 +131,9 @@ def run_classifier(X_origin, y_origin, X_over, y_over):
 
 	print('\nConfusion matrix of the SVM classifier for the oversampled dataset:\n')
 	print(confusion_matrix(y_test1,y_pred1))
+	
+	_ = plot_decision_boundary(X_origin, y_origin, title='original')
+	_ = plot_decision_boundary(X_over, y_over, title='oversampled')
 
 	return y_pred, y_pred1
 
