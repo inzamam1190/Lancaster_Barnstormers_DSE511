@@ -38,12 +38,16 @@ y_pred_org, y_pred_over = svm.run_classifier(X_origin, y_origin, X_over, y_over)
 ```
 
 - Running kNN classifier with the default k=1:
-```
+```python
+
 python3 knn.py
+
 ```
 
 - Running kNN classifier with a different value of k:
-```
+```python
+
 import knn
 y_pred_org, y_pred_over = knn.run_classifier(X_origin, y_origin, X_over, y_over, 1)
+
 ```
