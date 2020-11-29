@@ -11,14 +11,10 @@ Matches svm.py workflow.
 """
 
 # Import scikit-learn modules
-from sklearn.neighbors import kNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 from sklearn import metrics
-
-# Import module to prepare data
-import prepre_data
-
-# Load data
-X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
 
 def run_classifier(X_origin, y_origin, X_over, y_over, k):
   """
@@ -37,29 +33,34 @@ def run_classifier(X_origin, y_origin, X_over, y_over, k):
   """
   
   #Normalize the dataset
-	X_origin = StandardScaler().fit_transform(X_origin)
-	X_over = StandardScaler().fit_transform(X_over)
+  X_origin = StandardScaler().fit_transform(X_origin)
+  X_over = StandardScaler().fit_transform(X_over)
   
   #Randomly split training and testing data from the original dataset
-	X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=21)
+  X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=21)
 
-  knn = kNeighborsClassifier(k)
+  knn = KNeighborsClassifier(k)
   knn.fit(X_train, y_train)
   y_pred = knn.predict(X_test)
   score = metrics.accuracy_score(y_test, y_pred)
-  print(f"Accuracy on original data set using {k} neighbors is: {score}")
+  print(f"Accuracy on original data set using {k} neighbor(s) is: {score}")
   
   #Randomly split training and testing data from the oversampled dataset
-	X_train, X_test, y_train, y_test = train_test_split(X_over, y_over, test_size=0.33,random_state=21)  
+  X_train, X_test, y_train, y_test = train_test_split(X_over, y_over, test_size=0.33,random_state=21)  
   
-  knn1 = kNeighborsClassifier(k)
+  knn1 = KNeighborsClassifier(k)
   knn1.fit(X_train, y_train)
   y_pred1 = knn1.predict(X_test)
   score1 = metrics.accuracy_score(y_test, y_pred1)
-  print(f"Accuracy on original data set using {k} neighbors is: {score1}")
+  print(f"Accuracy on oversampled data set using {k} neighbor(s) is: {score1}")
   
   return y_pred, y_pred1
 
 if __name__ == "__main__":
-	y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over,1)
+  # Import module to prepare data
+  import prepare_data
+
+  # Load data
+  X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+  y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over,1)
   
