@@ -23,7 +23,7 @@ def run_randomforest(X_origin, y_origin, X_over, y_over):
         y_pred : prediction on the original test dataset, ndarray
         y_pred1 : prediction on the oversampled test dataset, ndarray
     """
-    X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=10)
+    X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=21)
 
     clf=RandomForestClassifier(n_estimators=1000)
 
@@ -34,7 +34,7 @@ def run_randomforest(X_origin, y_origin, X_over, y_over):
     print("Accuracy for original data:",metrics.accuracy_score(y_test, y_pred))
     print("Classification report for RF classifier on the original dataset:", classification_report(y_test, y_pred))
 
-    X_train2, X_test2, y_train2, y_test2 = train_test_split(X_over, y_over, test_size=0.33,random_state=10)
+    X_train2, X_test2, y_train2, y_test2 = train_test_split(X_over, y_over, test_size=0.33,random_state=21)
 
     clf2=RandomForestClassifier(n_estimators=1000)
 
