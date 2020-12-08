@@ -51,3 +51,11 @@ import knn
 y_pred_org, y_pred_over = knn.run_classifier(X_origin, y_origin, X_over, y_over, 1)
 
 ```
+
+- Running RF classifier
+
+```python
+import RF
+y_pred_org, y_pred_over = RF.run_randomforest(X_origin, y_origin, X_over, y_over)
+
+```
