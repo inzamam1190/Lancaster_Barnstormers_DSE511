@@ -33,7 +33,7 @@ X_origin, y_origin, X_over, y_over = prepare_data.get_data('path/to/your/databas
 ```python
 
 import svm
-y_pred_org, y_pred_over = svm.run_classifier(X_origin, y_origin, X_over, y_over)
+clf0, X_test0, y_test0, clf1, X_test1, y_test1 = svm.run_svm(X_origin, y_origin, X_over, y_over)
 
 ```
 
@@ -48,7 +48,7 @@ python3 knn.py
 ```python
 
 import knn
-y_pred_org, y_pred_over = knn.run_classifier(X_origin, y_origin, X_over, y_over, 1)
+clf0, X_test0, y_test0, clf1, X_test1, y_test1 = knn.run_knn(X_origin, y_origin, X_over, y_over, 1)
 
 ```
 
@@ -56,6 +56,13 @@ y_pred_org, y_pred_over = knn.run_classifier(X_origin, y_origin, X_over, y_over,
 
 ```python
 import RF
-y_pred_org, y_pred_over = RF.run_randomforest(X_origin, y_origin, X_over, y_over)
+clf0, X_test0, y_test0, clf1, X_test1, y_test1 = RF.run_randomforest(X_origin, y_origin, X_over, y_over)
 
+```
+
+- Running the overall excecution script in terminal
+  This prints out performance of all the classifiers and saves figures for ROC curve.
+  
+```python
+python excecution.py
 ```

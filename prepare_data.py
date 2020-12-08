@@ -1,4 +1,6 @@
 """
+File: prepare_data.py
+
 This is the python script for preparing structured data for final group 
 project of DSE 511.
 
