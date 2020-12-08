@@ -57,10 +57,10 @@ def run_classifier(X_origin, y_origin, X_over, y_over, k):
   return y_pred, y_pred1
 
 if __name__ == "__main__":
-  # Import module to prepare data
-  import prepare_data
+    # Import module to prepare data
+    import prepare_data
 
-  # Load data
-  X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
-  y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over,1)
+    # Load data
+    X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+    y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over,1)
   

@@ -11,7 +11,6 @@ Date: 11/25/2020
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-import prepare_data
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import svm
@@ -20,8 +19,7 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
 
-#Getting original and oversampled data
-X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+
 
 def plot_decision_boundary(X,y,title:str):
 	
@@ -138,6 +136,14 @@ def run_classifier(X_origin, y_origin, X_over, y_over):
 	return y_pred, y_pred1
 
 if __name__ == "__main__":
+    
+    # Import module to prepare data
+    import prepare_data
+    
+    # Getting original and oversampled data
+    X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+    
+    # Train the model
 	y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over)
 
 
