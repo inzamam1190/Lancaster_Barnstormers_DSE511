@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
 
-
-import prepare_data
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 from sklearn.metrics import classification_report
 
-X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
+
 
 def run_randomforest(X_origin, y_origin, X_over, y_over):
     """Args:
@@ -48,11 +45,10 @@ def run_randomforest(X_origin, y_origin, X_over, y_over):
     return y_pred, y_pred2
 
 if __name__ == "__main__":
+    
+    import prepare_data
+    X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
     y_pred, y_pred2 = run_randomforest(X_origin, y_origin, X_over, y_over)
-
-
-# In[ ]:
-
 
 
 
