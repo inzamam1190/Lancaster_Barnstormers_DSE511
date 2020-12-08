@@ -18,7 +18,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
-
+from sklearn.metrics import accuracy_score
 
 
 def plot_decision_boundary(X,y,title:str):
@@ -69,7 +69,7 @@ def plot_decision_boundary(X,y,title:str):
 
     return None
 
-def run_classifier(X_origin, y_origin, X_over, y_over):
+def run_svm(X_origin, y_origin, X_over, y_over):
     
     """ Run SVM classifier on the original and oversampled datasets
 
@@ -101,6 +101,9 @@ def run_classifier(X_origin, y_origin, X_over, y_over):
     y_pred = clf.predict(X_test)
 
     #Display classification summary report
+    acc = accuracy_score(y_test,y_pred)
+    print(f'Accuracy of the SVM classifier for the original dataset: {acc}')
+    
     print('\nClassification report of SVM classifier for the original dataset\n')
     print(classification_report(y_test, y_pred))
 
@@ -113,14 +116,21 @@ def run_classifier(X_origin, y_origin, X_over, y_over):
 
     #Randomly split training and testing data from the oversampled dataset
     X_train1, X_test1, y_train1, y_test1 = train_test_split(X_over, y_over, test_size=0.33,random_state=21)
-
+    
+    #Initialize
+    clf1 = svm.SVC(kernel='rbf', gamma='auto', C=3.0) 
+    
     #Train the model using the training sets
-    clf.fit(X_train1, y_train1)
+    clf1.fit(X_train1, y_train1)
 
     #Predict the response for test dataset
-    y_pred1 = clf.predict(X_test1)
+    y_pred1 = clf1.predict(X_test1)
 
     #Display classification summary report for the oversampled dataset
+    acc2 = accuracy_score(y_test1,y_pred1)
+    print('========================================================================')
+    print(f'Accuracy of the SVM classifier for the oversampled dataset: {acc2}')
+    
     print('\nClassification report of SVM classifier for the oversampled dataset\n')
     print(classification_report(y_test1, y_pred1))
 
@@ -133,7 +143,7 @@ def run_classifier(X_origin, y_origin, X_over, y_over):
     _ = plot_decision_boundary(X_origin, y_origin, title='original')
     _ = plot_decision_boundary(X_over, y_over, title='oversampled')
 
-    return y_pred, y_pred1
+    return clf,X_test,y_test, clf1, X_test1,y_test1
 
 if __name__ == "__main__":
 
@@ -144,7 +154,7 @@ if __name__ == "__main__":
     X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
 
     # Train the model
-    y_pred, y_pred1 = run_classifier(X_origin, y_origin, X_over, y_over)
+    clf,X_test,y_test, clf1, X_test1,y_test1 = run_svm(X_origin, y_origin, X_over, y_over)
 
 
 
