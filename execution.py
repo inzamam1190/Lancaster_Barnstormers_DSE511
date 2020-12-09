@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 def main():
     X_origin, y_origin, X_over, y_over = prepare_data.get_data('financial.db')
-    k = input("Input the value of k for kNN model:")
+    k = input("Input the value of k for kNN model: ")
     knn0,X_test0,y_test0, knn1,X_test1,y_test1 = knn.run_knn(X_origin, y_origin, X_over, y_over, int(k))
     print('\n')
     rf0,X_test_rf0,y_test_rf0, rf1, X_test_rf1,y_test_rf1 = RF.run_randomforest(X_origin, y_origin, X_over, y_over)
