@@ -19,6 +19,7 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import accuracy_score
+import time
 
 
 def plot_decision_boundary(X,y,title:str):
@@ -91,6 +92,9 @@ def run_svm(X_origin, y_origin, X_over, y_over):
     #Randomly split training and testing data from the original dataset
     X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=21)
 
+    # Start timer
+    ts = time.time()
+
     #Create a svm Classifier
     clf = svm.SVC(kernel='rbf', gamma='auto', C=3.0) #RBF kernel
 
@@ -99,6 +103,11 @@ def run_svm(X_origin, y_origin, X_over, y_over):
 
     #Predict the response for test dataset
     y_pred = clf.predict(X_test)
+
+    # Stop timer
+    te = time.time()
+
+    print(f'Execution time of SVM for the original data set: {te-ts}')
 
     #Display classification summary report
     acc = accuracy_score(y_test,y_pred)
@@ -117,6 +126,9 @@ def run_svm(X_origin, y_origin, X_over, y_over):
     #Randomly split training and testing data from the oversampled dataset
     X_train1, X_test1, y_train1, y_test1 = train_test_split(X_over, y_over, test_size=0.33,random_state=21)
     
+    # Start timer
+    ts = time.time()
+
     #Initialize
     clf1 = svm.SVC(kernel='rbf', gamma='auto', C=3.0) 
     
@@ -125,6 +137,11 @@ def run_svm(X_origin, y_origin, X_over, y_over):
 
     #Predict the response for test dataset
     y_pred1 = clf1.predict(X_test1)
+
+    # Stop timer
+    te = time.time()
+
+    print(f'Execution time of SVM for the oversampled data set: {te-ts}')
 
     #Display classification summary report for the oversampled dataset
     acc2 = accuracy_score(y_test1,y_pred1)

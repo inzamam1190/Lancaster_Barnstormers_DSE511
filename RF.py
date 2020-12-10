@@ -8,6 +8,7 @@ from sklearn import metrics
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
+import time
 
 
 def run_randomforest(X_origin, y_origin, X_over, y_over):
@@ -23,11 +24,15 @@ def run_randomforest(X_origin, y_origin, X_over, y_over):
     """
     X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=21)
 
+    ts = time.time()
     clf=RandomForestClassifier(n_estimators=1000)
 
     clf.fit(X_train,y_train)
 
     y_pred=clf.predict(X_test)
+    te = time.time()
+
+    print(f'Execution time for RF applied to original data set is {te - ts} seconds');
     
     print("Confusion Matrix for RF classifier on the original dataset:\n")
     print(confusion_matrix(y_test,y_pred))
@@ -38,11 +43,16 @@ def run_randomforest(X_origin, y_origin, X_over, y_over):
 
     X_train2, X_test2, y_train2, y_test2 = train_test_split(X_over, y_over, test_size=0.33,random_state=21)
 
+    ts = time.time()
+
     clf2=RandomForestClassifier(n_estimators=1000)
 
     clf2.fit(X_train2,y_train2)
 
     y_pred2=clf2.predict(X_test2)
+    te = time.time()
+
+    print(f'Execution time for RF applied to oversampled data set is {te - ts} seconds');
     
     print("===========================================================================")
     print("Confusion Matrix for RF classifier on the oversampled dataset:\n")

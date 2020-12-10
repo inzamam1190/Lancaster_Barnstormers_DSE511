@@ -18,6 +18,7 @@ from sklearn import metrics
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score
+import time
 
 def run_knn(X_origin, y_origin, X_over, y_over, k):
     """
@@ -42,11 +43,14 @@ def run_knn(X_origin, y_origin, X_over, y_over, k):
     #Randomly split training and testing data from the original dataset
     X_train, X_test, y_train, y_test = train_test_split(X_origin, y_origin, test_size=0.33,random_state=21)
 
+    ts = time.time()
     knn = KNeighborsClassifier(k)
     knn.fit(X_train, y_train)
     y_pred = knn.predict(X_test)
+    te = time.time()
     score = metrics.accuracy_score(y_test, y_pred)
     print(f"Accuracy on original data set using {k} neighbor(s) is: {score}")
+    print(f"Execution time for kNN using original data set: {te - ts}")
     
     print(f'\nClassification report of kNN(k={k}) classifier for the original dataset\n')
     print(classification_report(y_test, y_pred))
@@ -60,12 +64,15 @@ def run_knn(X_origin, y_origin, X_over, y_over, k):
     #Randomly split training and testing data from the oversampled dataset
     X_train1, X_test1, y_train1, y_test1 = train_test_split(X_over, y_over, test_size=0.33,random_state=21)  
 
+    ts = time.time()
     knn1 = KNeighborsClassifier(k)
     knn1.fit(X_train1, y_train1)
     y_pred1 = knn1.predict(X_test1)
+    te = time.time()
     score1 = metrics.accuracy_score(y_test1, y_pred1)
     print("================================================================================")
     print(f"Accuracy on oversampled data set using {k} neighbor(s) is: {score1}")
+    print(f"Execution time for kNN using oversampled data set: {te - ts}")
     
     print(f'\nClassification report of kNN(k={k}) classifier for the oversampled dataset\n')
     print(classification_report(y_test1, y_pred1))
